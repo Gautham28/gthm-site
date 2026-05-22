@@ -1,97 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-
-const introParagraphs = [
-  "I like being the person who turns ideas into outcomes.",
-  "Started my career as a visual designer by chance, but I was always geeked out into playing with software and stripping it down to understand how it works, and also was a fan of good aesthetics.",
-  "I also did graphics design, video editing, motion graphics and a handful of animations as well. I now do a mix of everything, from building products to teaching design engineering.",
-];
-
-const skills = [
-  "React",
-  "React Native",
-  "Java",
-  "SpringBoot",
-  "Next.js",
-  "UI/UX",
-  "Docker",
-  "Tailwind",
-];
-
-const career = [
-  {
-    company: "Isymply",
-    url: "#",
-    summary: "Join over 20,000 brands using podcast advertising to drive revenue.",
-    roles: [
-      {
-        title: "Application Developer",
-        time: "Aug 2025 - Present",
-        body: "Owning the frontend for a platform that helps brands rapidly test podcast ads using last-minute inventory - building fast, reliable flows that turn niche, leaned-in listeners into actual conversions.",
-      },
-    ],
-  },
-];
-
-const designWork = [
-  {
-    title: "Fermion",
-    url: "#",
-    body: "AI-ready. More than a LMS. Live classes, coding labs, conduct proctored exams. Everything whitelabeled with your own branding.",
-  },
-  {
-    title: "Webinar",
-    url: "#",
-    body: "Level up your webinars with enterprise-grade security, unlimited scalability, and seamless integrations. Host professional virtual events that engage your audience.",
-  },
-  {
-    title: "1ai",
-    url: "#",
-    body: "1ai is a platform that allows you to chat with different LLMs via a unified interface.",
-  },
-];
-
-const projects = [
-  {
-    title: "Gradii",
-    url: "#",
-    body: "A simple gradient generator tool made by designer for designers to create stunning gradients with customizable colors, text, and effects. Use it for your designs,...",
-    bullets: [
-      "Started as a late-night 'my wallpaper is boring' idea - a tiny tool to generate gradients from a few colors.",
-      "Evolved into a full design utility with custom color inputs, text overlays, image blending, multi-resolution export, and more.",
-      "Picked up traction unexpectedly - appreciated by Guillermo Rauch (CEO of Vercel) and featured on Peerlist.",
-      "Now a polished, versatile gradient generator used weekly by hundreds of users worldwide.",
-    ],
-  },
-  {
-    title: "Colors",
-    url: "#",
-    body: "Convert color codes of any format to css color codes.",
-    bullets: [
-      "Built out of personal frustration - a fast, accurate color format converter for hex, rgb, hsl, and beyond.",
-      "Expanded into a handy color workflow tool with palette generation, web-safe swatches, and quick export options for CSS variables or Tailwind configs.",
-    ],
-  },
-];
-
-const oss = [
-  {
-    title: "code100x",
-    url: "#",
-    time: "Aug 2025",
-    bullets: [
-      {
-        title: "CMS: UI Changes - #532",
-        url: "#",
-        body: "Redesigned major parts of the 100xDevs CMS UI - improving hierarchy, spacing, consistency, and overall usability.",
-      },
-      {
-        title: "Daily Code: Major UI Revamp - #1135",
-        url: "#",
-        body: "Delivered a significant UI overhaul for the Daily Code repository, enhancing both aesthetics and developer experience.",
-      },
-    ],
-  },
-];
+import { site } from "./lib/content.js";
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -125,30 +33,26 @@ function App() {
           <div className="mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
             <div className="flex flex-col gap-2">
               <h1 className="text-xl font-medium leading-7 tracking-tight text-[var(--heading)]">
-                Gautham Krishna
+                {site.profile.name}
               </h1>
-              <p className="text-[var(--body)]">22, Application Developer</p>
+              <p className="text-[var(--body)]">{site.profile.tagline}</p>
             </div>
 
             <div className="text-[var(--body)]">
-              {introParagraphs.map((paragraph) => (
+              {site.introParagraphs.map((paragraph) => (
                 <p key={paragraph} className="mb-6 last:mb-0">
                   {paragraph}
                 </p>
               ))}
-              <p>
-                You&apos;ll find me shitposting on <InlineLink href="#">X</InlineLink>, check out my{" "}
-                <InlineLink href="#">digital store</InlineLink>, or you can always reach me at{" "}
-                <InlineLink href="mailto:hi@gthm.me">hi@gthm.me</InlineLink>.
-              </p>
+              <FooterLine parts={site.footer.parts} />
             </div>
           </div>
         </header>
 
         <main className="z-40 flex flex-col">
-          <Section title="Skills" subtitle="Technologies and tools I work with">
+          <Section title={site.sections.skills.title} subtitle={site.sections.skills.subtitle}>
             <div className="grid w-full grid-cols-3 gap-8">
-              {skills.map((skill) => (
+              {site.skills.map((skill) => (
                 <span key={skill} className="text-sm leading-5 text-[var(--body)]">
                   {skill}
                 </span>
@@ -156,38 +60,38 @@ function App() {
             </div>
           </Section>
 
-          <Section title="Career" subtitle="Work experience and roles">
+          <Section title={site.sections.career.title} subtitle={site.sections.career.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
-              {career.map((entry) => (
+              {site.career.map((entry) => (
                 <CompanyEntry key={entry.company} {...entry} />
               ))}
             </div>
           </Section>
 
-          <Section title="Design Work I Crafted" subtitle="Client work and design projects">
+          <Section title={site.sections.designWork.title} subtitle={site.sections.designWork.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
               <div className="flex flex-col gap-8">
-                {designWork.map((item) => (
+                {site.designWork.map((item) => (
                   <TextEntry key={item.title} {...item} />
                 ))}
               </div>
             </div>
           </Section>
 
-          <Section title="Projects I Built" subtitle="Personal projects and experiments">
+          <Section title={site.sections.projects.title} subtitle={site.sections.projects.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
               <div className="flex flex-col gap-12">
-                {projects.map((project) => (
+                {site.projects.map((project) => (
                   <ProjectEntry key={project.title} {...project} />
                 ))}
               </div>
             </div>
           </Section>
 
-          <Section title="OSS Contributions" subtitle="Open source projects I&apos;ve contributed to">
+          <Section title={site.sections.oss.title} subtitle={site.sections.oss.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
               <div className="flex flex-col gap-8">
-                {oss.map((item) => (
+                {site.oss.map((item) => (
                   <div key={item.title} className="flex flex-col gap-0">
                     <div className="flex w-full flex-col gap-1">
                       <ExternalLink href={item.url}>{item.title}</ExternalLink>
@@ -306,6 +210,22 @@ function Timeline({ items }) {
         </li>
       ))}
     </ol>
+  );
+}
+
+function FooterLine({ parts }) {
+  return (
+    <p>
+      {parts.map((part, index) =>
+        typeof part === "string" ? (
+          <span key={`${part}-${index}`}>{part}</span>
+        ) : (
+          <InlineLink key={`${part.label}-${index}`} href={part.href}>
+            {part.label}
+          </InlineLink>
+        ),
+      )}
+    </p>
   );
 }
 
