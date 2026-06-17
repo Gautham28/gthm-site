@@ -6,6 +6,7 @@ const { data, content } = parseSiteMarkdown(siteRaw);
 export const site = {
   profile: data.profile,
   sections: data.sections,
+  connect: data.connect,
   skills: data.skills,
   career: data.career,
   designWork: data.designWork,

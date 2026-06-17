@@ -14,6 +14,8 @@ footer:
     - "."
 
 sections:
+  connect:
+    title: Connect
   skills:
     title: Skills
     subtitle: Technologies and tools I work with
@@ -29,6 +31,26 @@ sections:
   oss:
     title: OSS Contributions
     subtitle: Open source projects I've contributed to
+
+connect:
+  - label: GitHub
+    icon: github
+    href: "#"
+  - label: Twitter
+    icon: twitter
+    href: "#"
+  - label: LinkedIn
+    icon: linkedin
+    href: "#"
+  - label: Mail
+    icon: mail
+    href: "mailto:hi@gthm.me"
+  - label: Medium
+    icon: medium
+    href: "#"
+  - label: Resume
+    icon: resume
+    href: "#"
 
 skills:
   - React
