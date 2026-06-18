@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Tooltip } from "./Tooltip.jsx";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DAY_LABELS = [
@@ -51,20 +52,36 @@ function getMonthLabels(weeks) {
   return labels;
 }
 
+function formatContributionDate(dateStr) {
+  const date = new Date(`${dateStr}T12:00:00`);
+  return `${MONTHS[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
+
+function formatContributionLabel(day) {
+  const date = formatContributionDate(day.date);
+
+  if (day.count === 0) {
+    return `No contributions on ${date}`;
+  }
+
+  return `${day.count} contribution${day.count === 1 ? "" : "s"} on ${date}`;
+}
+
 function ContributionCell({ day }) {
   if (!day) {
     return <span aria-hidden="true" className="github-graph-cell github-graph-cell--empty" />;
   }
 
-  const title = day.count === 0 ? "No activity" : `${day.count} contribution${day.count === 1 ? "" : "s"}`;
+  const label = formatContributionLabel(day);
 
   return (
-    <span
-      aria-label={title}
-      className="github-graph-cell"
-      data-level={day.level}
-      title={`${day.count} contribution${day.count === 1 ? "" : "s"} on ${day.date}`}
-    />
+    <Tooltip text={label}>
+      <span
+        aria-label={label}
+        className="github-graph-cell"
+        data-level={day.level}
+      />
+    </Tooltip>
   );
 }
 
