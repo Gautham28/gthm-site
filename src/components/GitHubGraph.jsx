@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Tooltip } from "./Tooltip.jsx";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -75,7 +75,7 @@ function ContributionCell({ day }) {
   const label = formatContributionLabel(day);
 
   return (
-    <Tooltip text={label}>
+    <Tooltip position="bottom" text={label}>
       <span
         aria-label={label}
         className="github-graph-cell"
@@ -85,8 +85,39 @@ function ContributionCell({ day }) {
   );
 }
 
+function usePassThroughVerticalScroll(ref, enabled) {
+  useEffect(() => {
+    const container = ref.current;
+    if (!container || !enabled) return;
+
+    const onWheel = (event) => {
+      const { deltaX, deltaY } = event;
+      const isVerticalScroll = Math.abs(deltaY) >= Math.abs(deltaX);
+
+      if (isVerticalScroll) {
+        window.scrollBy(0, deltaY);
+        event.preventDefault();
+        return;
+      }
+
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (maxScrollLeft <= 0) return;
+
+      const nextScrollLeft = Math.max(0, Math.min(maxScrollLeft, container.scrollLeft + deltaX));
+      if (nextScrollLeft !== container.scrollLeft) {
+        container.scrollLeft = nextScrollLeft;
+        event.preventDefault();
+      }
+    };
+
+    container.addEventListener("wheel", onWheel, { passive: false });
+    return () => container.removeEventListener("wheel", onWheel);
+  }, [ref, enabled]);
+}
+
 export function GitHubGraph({ username }) {
   const year = new Date().getFullYear();
+  const scrollRef = useRef(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
 
@@ -118,6 +149,8 @@ export function GitHubGraph({ username }) {
     };
   }, [username, year]);
 
+  usePassThroughVerticalScroll(scrollRef, Boolean(data && !error));
+
   const weeks = useMemo(() => buildWeeks(data?.contributions ?? []), [data]);
   const monthLabels = useMemo(() => getMonthLabels(weeks), [weeks]);
   const total = data?.total?.[String(year)] ?? data?.contributions?.reduce((sum, day) => sum + day.count, 0) ?? 0;
@@ -133,7 +166,7 @@ export function GitHubGraph({ username }) {
           <div aria-hidden="true" className="github-graph-skeleton" />
         ) : (
           <>
-            <div className="github-graph-scroll">
+            <div ref={scrollRef} className="github-graph-scroll">
               <div className="github-graph-layout">
                 <div aria-hidden="true" className="github-graph-day-labels">
                   {DAY_LABELS.map(({ row, label }) => (
