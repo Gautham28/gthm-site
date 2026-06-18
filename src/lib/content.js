@@ -10,10 +10,7 @@ export const site = {
   github: data.github,
   skills: data.skills,
   career: data.career,
-  designWork: data.designWork,
   projects: data.projects,
-  oss: data.oss,
   introParagraphs: content.trim().split(/\n\n+/).filter(Boolean),
-  footer: data.footer,
   meta: data.meta,
 };

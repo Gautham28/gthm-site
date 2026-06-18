@@ -52,7 +52,6 @@ function App() {
                   {paragraph}
                 </p>
               ))}
-              <FooterLine parts={site.footer.parts} />
             </div>
           </div>
         </header>
@@ -80,41 +79,11 @@ function App() {
             </div>
           </Section>
 
-          <Section title={site.sections.designWork.title} subtitle={site.sections.designWork.subtitle}>
-            <div className="grid w-full grid-cols-1 gap-8">
-              <div className="flex flex-col gap-8">
-                {site.designWork.map((item) => (
-                  <TextEntry key={item.title} {...item} />
-                ))}
-              </div>
-            </div>
-          </Section>
-
           <Section title={site.sections.projects.title} subtitle={site.sections.projects.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
               <div className="flex flex-col gap-12">
                 {site.projects.map((project) => (
                   <ProjectEntry key={project.title} {...project} />
-                ))}
-              </div>
-            </div>
-          </Section>
-
-          <Section title={site.sections.oss.title} subtitle={site.sections.oss.subtitle}>
-            <div className="grid w-full grid-cols-1 gap-8">
-              <div className="flex flex-col gap-8">
-                {site.oss.map((item) => (
-                  <div key={item.title} className="flex flex-col gap-0">
-                    <div className="flex w-full flex-col gap-1">
-                      <ExternalLink href={item.url}>{item.title}</ExternalLink>
-                      <p className="whitespace-nowrap text-sm leading-5 text-[var(--muted-body)]">
-                        {item.time}
-                      </p>
-                    </div>
-                    <div className="pt-6">
-                      <Timeline items={item.bullets} />
-                    </div>
-                  </div>
                 ))}
               </div>
             </div>
@@ -309,30 +278,6 @@ function Timeline({ items }) {
         </li>
       ))}
     </ol>
-  );
-}
-
-function FooterLine({ parts }) {
-  return (
-    <p>
-      {parts.map((part, index) =>
-        typeof part === "string" ? (
-          <span key={`${part}-${index}`}>{part}</span>
-        ) : (
-          <InlineLink key={`${part.label}-${index}`} href={part.href}>
-            {part.label}
-          </InlineLink>
-        ),
-      )}
-    </p>
-  );
-}
-
-function InlineLink({ href, children }) {
-  return (
-    <a className="inline-link" href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
-      {children}
-    </a>
   );
 }
 
