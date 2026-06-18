@@ -31,11 +31,18 @@ function App() {
 
         <header className="flex flex-col gap-8">
           <div className="mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-xl font-medium leading-7 tracking-tight text-[var(--heading)]">
-                {site.profile.name}
-              </h1>
-              <p className="text-[var(--body)]">{site.profile.tagline}</p>
+            <div className="flex items-center gap-5">
+              <img
+                alt={site.profile.name}
+                className="h-20 w-20 shrink-0 rounded-2xl object-cover"
+                src={site.profile.image}
+              />
+              <div className="flex flex-col gap-1">
+                <h1 className="text-2xl font-semibold leading-8 tracking-tight text-[var(--heading)]">
+                  {site.profile.name}
+                </h1>
+                <p className="text-[var(--body)]">{site.profile.tagline}</p>
+              </div>
             </div>
 
             <div className="text-[var(--body)]">
