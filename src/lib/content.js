@@ -7,6 +7,7 @@ export const site = {
   profile: data.profile,
   sections: data.sections,
   connect: data.connect,
+  github: data.github,
   skills: data.skills,
   career: data.career,
   designWork: data.designWork,

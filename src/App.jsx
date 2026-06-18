@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { GitHubGraph } from "./components/GitHubGraph.jsx";
 import { site } from "./lib/content.js";
 
 function App() {
@@ -58,6 +59,8 @@ function App() {
 
         <main className="z-40 flex flex-col">
           <ConnectSection title={site.sections.connect.title} links={site.connect} />
+
+          <GitHubGraph username={site.github?.username} />
 
           <Section title={site.sections.skills.title} subtitle={site.sections.skills.subtitle}>
             <div className="grid w-full grid-cols-3 gap-8">

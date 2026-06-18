@@ -36,7 +36,7 @@ sections:
 connect:
   - label: GitHub
     icon: github
-    href: "#"
+    href: "https://github.com/Gautham28"
   - label: Twitter
     icon: twitter
     href: "#"
@@ -52,6 +52,9 @@ connect:
   - label: Resume
     icon: resume
     href: "#"
+
+github:
+  username: Gautham28
 
 skills:
   - React
