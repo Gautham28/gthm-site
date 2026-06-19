@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { GitHubGraph } from "./components/GitHubGraph.jsx";
+import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
 import { site } from "./lib/content.js";
 
 function App() {
@@ -88,6 +89,8 @@ function App() {
               </div>
             </div>
           </Section>
+
+          <QuoteVisitorCard counterKey={site.visitorCounter?.key} quote={site.quote} />
         </main>
       </div>
 

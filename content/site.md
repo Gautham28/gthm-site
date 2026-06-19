@@ -76,6 +76,13 @@ projects:
       - Built out of personal frustration - a fast, accurate color format converter for hex, rgb, hsl, and beyond.
       - Expanded into a handy color workflow tool with palette generation, web-safe swatches, and quick export options for CSS variables or Tailwind configs.
 
+quote:
+  text: "The only way to do great work is to love what you do."
+  author: Steve Jobs
+
+visitorCounter:
+  key: gthm-site-gautham-visits
+
 meta:
   title: Gautham Krishna
   description: Gautham Krishna - Application Developer

@@ -268,6 +268,80 @@ button {
   background: var(--connect-btn-hover-bg);
 }
 
+.quote-visitor-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  gap: 24px;
+  padding: 20px 24px;
+  border: 1px solid var(--connect-btn-border);
+  border-radius: 16px;
+  background: var(--bg);
+}
+
+.quote-visitor-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quote-visitor-mark {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  color: var(--muted-body);
+}
+
+.quote-visitor-text {
+  color: var(--body);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.quote-visitor-author {
+  align-self: flex-end;
+  color: var(--muted-body);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.quote-visitor-divider {
+  background: var(--connect-btn-border);
+}
+
+.quote-visitor-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--body);
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+}
+
+.quote-visitor-number {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.quote-visitor-suffix {
+  margin-left: 1px;
+  font-size: 0.62em;
+  font-weight: 600;
+  vertical-align: super;
+}
+
+@media (max-width: 767px) {
+  .quote-visitor-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .quote-visitor-divider {
+    width: 100%;
+    height: 1px;
+  }
+}
+
 .github-graph {
   display: flex;
   flex-direction: column;

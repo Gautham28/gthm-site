@@ -11,6 +11,8 @@ export const site = {
   skills: data.skills,
   career: data.career,
   projects: data.projects,
+  quote: data.quote,
+  visitorCounter: data.visitorCounter,
   introParagraphs: content.trim().split(/\n\n+/).filter(Boolean),
   meta: data.meta,
 };
