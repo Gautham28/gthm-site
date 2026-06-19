@@ -30,9 +30,6 @@ connect:
   - label: Mail
     icon: mail
     href: "mailto:hi@gthm.me"
-  - label: Medium
-    icon: medium
-    href: "#"
   - label: Resume
     icon: resume
     href: "#"
