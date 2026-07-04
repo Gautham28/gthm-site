@@ -60,6 +60,7 @@ career:
 projects:
   - title: Gradii
     url: "#"
+    githubUrl: "#"
     body: A simple gradient generator tool made by designer for designers to create stunning gradients with customizable colors, text, and effects. Use it for your designs,...
     bullets:
       - Started as a late-night 'my wallpaper is boring' idea - a tiny tool to generate gradients from a few colors.
@@ -68,6 +69,7 @@ projects:
       - Now a polished, versatile gradient generator used weekly by hundreds of users worldwide.
   - title: Colors
     url: "#"
+    githubUrl: "#"
     body: Convert color codes of any format to css color codes.
     bullets:
       - Built out of personal frustration - a fast, accurate color format converter for hex, rgb, hsl, and beyond.
