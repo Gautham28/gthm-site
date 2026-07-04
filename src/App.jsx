@@ -3,8 +3,13 @@ import { GitHubGraph } from "./components/GitHubGraph.jsx";
 import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
 import { site } from "./lib/content.js";
 
+const CAREER_PREVIEW_COUNT = 2;
+const PROJECTS_PREVIEW_COUNT = 2;
+
 function App() {
   const [theme, setTheme] = useState("dark");
+  const [showAllCareer, setShowAllCareer] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -15,6 +20,9 @@ function App() {
     () => (theme === "dark" ? "Switch to light mode" : "Switch to dark mode"),
     [theme],
   );
+
+  const visibleCareer = showAllCareer ? site.career : site.career.slice(0, CAREER_PREVIEW_COUNT);
+  const visibleProjects = showAllProjects ? site.projects : site.projects.slice(0, PROJECTS_PREVIEW_COUNT);
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--body)] transition-colors duration-300">
@@ -74,20 +82,32 @@ function App() {
 
           <Section title={site.sections.career.title} subtitle={site.sections.career.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
-              {site.career.map((entry) => (
+              {visibleCareer.map((entry) => (
                 <CompanyEntry key={entry.company} {...entry} />
               ))}
             </div>
+            {site.career.length > CAREER_PREVIEW_COUNT ? (
+              <ViewAllButton
+                isExpanded={showAllCareer}
+                onToggle={() => setShowAllCareer((current) => !current)}
+              />
+            ) : null}
           </Section>
 
           <Section title={site.sections.projects.title} subtitle={site.sections.projects.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
               <div className="flex flex-col gap-12">
-                {site.projects.map((project) => (
+                {visibleProjects.map((project) => (
                   <ProjectEntry key={project.title} {...project} />
                 ))}
               </div>
             </div>
+            {site.projects.length > PROJECTS_PREVIEW_COUNT ? (
+              <ViewAllButton
+                isExpanded={showAllProjects}
+                onToggle={() => setShowAllProjects((current) => !current)}
+              />
+            ) : null}
           </Section>
 
           <QuoteVisitorCard counterKey={site.visitorCounter?.key} quote={site.quote} />
@@ -281,6 +301,31 @@ function Timeline({ items }) {
         </li>
       ))}
     </ol>
+  );
+}
+
+function ViewAllButton({ isExpanded, onToggle }) {
+  return (
+    <button
+      aria-expanded={isExpanded}
+      className="group inline-flex w-fit items-center gap-2 self-center text-sm leading-5 text-[var(--body)] transition-colors duration-150 hover:text-[var(--heading)]"
+      type="button"
+      onClick={onToggle}
+    >
+      <span>{isExpanded ? "Show less" : "View all"}</span>
+      <svg
+        aria-hidden="true"
+        className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </button>
   );
 }
 
