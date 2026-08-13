@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { CommandPalette } from "./components/CommandPalette.jsx";
 import { GitHubGraph } from "./components/GitHubGraph.jsx";
+import { PixelFooter } from "./components/PixelFooter.jsx";
 import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
 import { Toast } from "./components/Toast.jsx";
 import { copyText } from "./lib/clipboard.js";
@@ -495,19 +496,6 @@ function TopFade() {
 
 function BottomFade() {
   return <div aria-hidden="true" className="bottom-fade" />;
-}
-
-function PixelFooter() {
-  return (
-    <footer className="relative z-10 mt-32 h-48 w-full items-center justify-center" aria-hidden="true">
-      <div className="footer-glow" />
-      <div className="relative z-10 mx-auto h-48 w-full max-w-screen-sm items-center justify-center">
-        <div className="relative mx-auto flex h-full w-full max-w-screen-sm items-start overflow-hidden">
-          <h2 className="pixel-mark">GTHM</h2>
-        </div>
-      </div>
-    </footer>
-  );
 }
 
 function MoonIcon() {

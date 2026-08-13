@@ -244,6 +244,38 @@ button {
   white-space: nowrap;
 }
 
+.pixel-mark-letter {
+  display: inline-block;
+  will-change: transform;
+}
+
+.pixel-footer {
+  --glitch-x: 0px;
+  --glitch-y: 0px;
+  --glitch-skew: 0deg;
+  --glitch-clip-top: 0%;
+  --glitch-clip-bottom: 0%;
+  --glitch-opacity: 0;
+}
+
+.pixel-mark-glitch {
+  pointer-events: none;
+  clip-path: inset(var(--glitch-clip-top) 0 var(--glitch-clip-bottom) 0);
+  opacity: var(--glitch-opacity);
+  mix-blend-mode: screen;
+}
+
+.pixel-mark-glitch--red {
+  color: #ff4d6d;
+  transform: translateY(35%) translate(var(--glitch-x), var(--glitch-y)) skewX(var(--glitch-skew));
+}
+
+.pixel-mark-glitch--cyan {
+  color: #5ce1ff;
+  transform: translateY(35%) translate(calc(var(--glitch-x) * -1), calc(var(--glitch-y) * -1))
+    skewX(calc(var(--glitch-skew) * -1));
+}
+
 :root[data-theme="light"] .pixel-mark {
   color: rgba(255, 255, 255, 0.58);
 }
@@ -608,6 +640,14 @@ button {
 @media (prefers-reduced-motion: reduce) {
   .theme-toggle-icon {
     animation: none;
+  }
+
+  .pixel-mark-glitch {
+    display: none;
+  }
+
+  .pixel-mark-letter {
+    transform: none !important;
   }
 }
 
