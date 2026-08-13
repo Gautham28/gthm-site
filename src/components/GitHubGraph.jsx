@@ -76,11 +76,7 @@ function ContributionCell({ day }) {
 
   return (
     <Tooltip position="bottom" text={label}>
-      <span
-        aria-label={label}
-        className="github-graph-cell"
-        data-level={day.level}
-      />
+      <span aria-label={label} className="github-graph-cell" data-level={day.level} />
     </Tooltip>
   );
 }

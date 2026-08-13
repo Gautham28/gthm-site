@@ -15,7 +15,7 @@ function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-export function CommandPalette({ theme, onToggleTheme, email, onCopied, extraCommands = [] }) {
+export function CommandPalette({ theme, onToggleTheme, email, onCopied }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -96,16 +96,6 @@ export function CommandPalette({ theme, onToggleTheme, email, onCopied, extraCom
       });
     }
 
-    extraCommands.forEach((command) => {
-      items.push({
-        ...command,
-        action: () => {
-          command.action?.();
-          closePalette();
-        },
-      });
-    });
-
     items.push({
       id: "command-theme",
       group: "Actions",
@@ -116,7 +106,7 @@ export function CommandPalette({ theme, onToggleTheme, email, onCopied, extraCom
     });
 
     return items;
-  }, [email, extraCommands, onCopied, onToggleTheme, theme]);
+  }, [email, onCopied, onToggleTheme, theme]);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
