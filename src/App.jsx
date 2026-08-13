@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { CommandPalette } from "./components/CommandPalette.jsx";
+import { DrawCanvas } from "./components/DrawCanvas.jsx";
 import { GitHubGraph } from "./components/GitHubGraph.jsx";
 import { PixelFooter } from "./components/PixelFooter.jsx";
 import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
@@ -42,6 +43,20 @@ function App() {
     (copied) => {
       showToast(copied ? `Copied ${copied}` : "Could not copy email");
     },
+    [showToast],
+  );
+
+  const doodleCommand = useMemo(
+    () => [
+      {
+        id: "command-doodle",
+        group: "Actions",
+        label: "Draw on the page",
+        keywords: "doodle scribble sketch canvas wipe",
+        hint: "Drag",
+        action: () => showToast("Click and drag to draw. Refresh to wipe."),
+      },
+    ],
     [showToast],
   );
 
@@ -104,9 +119,11 @@ function App() {
   const visibleProjects = showAllProjects ? site.projects : site.projects.slice(0, PROJECTS_PREVIEW_COUNT);
 
   return (
-    <div className="theme-surface min-h-screen bg-[var(--bg)] text-[var(--body)]">
+    <div className="theme-surface relative min-h-screen bg-[var(--bg)] text-[var(--body)]">
+      <DrawCanvas />
       <CommandPalette
         email={email}
+        extraCommands={doodleCommand}
         theme={theme}
         onCopied={handleCopiedEmail}
         onToggleTheme={toggleTheme}
