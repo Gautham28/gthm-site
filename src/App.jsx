@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
+import { CommandPalette } from "./components/CommandPalette.jsx";
 import { GitHubGraph } from "./components/GitHubGraph.jsx";
 import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
+import { Toast } from "./components/Toast.jsx";
 import { site } from "./lib/content.js";
 
 const CAREER_PREVIEW_COUNT = 2;
@@ -17,11 +19,35 @@ function App() {
   const [theme, setTheme] = useState("dark");
   const [showAllCareer, setShowAllCareer] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [toast, setToast] = useState("");
   const toggleRef = useRef(null);
+  const toastTimerRef = useRef(null);
+
+  const email = useMemo(() => {
+    const mail = site.connect.find((link) => link.href?.startsWith("mailto:"));
+    return mail?.href.replace(/^mailto:/i, "") ?? "";
+  }, []);
+
+  const showToast = useCallback((message) => {
+    setToast(message);
+    window.clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = window.setTimeout(() => setToast(""), 2200);
+  }, []);
+
+  const handleCopiedEmail = useCallback(
+    (copied) => {
+      showToast(copied ? `Copied ${copied}` : "Could not copy email");
+    },
+    [showToast],
+  );
 
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    return () => window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const toggleLabel = useMemo(
     () => (theme === "dark" ? "Switch to light mode" : "Switch to dark mode"),
@@ -75,6 +101,14 @@ function App() {
 
   return (
     <div className="theme-surface min-h-screen bg-[var(--bg)] text-[var(--body)]">
+      <CommandPalette
+        email={email}
+        theme={theme}
+        onCopied={handleCopiedEmail}
+        onToggleTheme={toggleTheme}
+      />
+      <Toast message={toast} />
+
       <button
         ref={toggleRef}
         aria-label={toggleLabel}
@@ -91,7 +125,7 @@ function App() {
       <div className="relative flex flex-col">
         <div className="min-h-16 w-full" />
 
-        <header className="flex flex-col gap-8">
+        <header id="top" className="site-section flex flex-col gap-8">
           <div className="mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
             <div className="flex items-center gap-5">
               <img
@@ -118,11 +152,11 @@ function App() {
         </header>
 
         <main className="z-40 flex flex-col">
-          <ConnectSection title={site.sections.connect.title} links={site.connect} />
+          <ConnectSection id="connect" title={site.sections.connect.title} links={site.connect} />
 
           <GitHubGraph username={site.github?.username} />
 
-          <Section title={site.sections.skills.title} subtitle={site.sections.skills.subtitle}>
+          <Section id="skills" title={site.sections.skills.title} subtitle={site.sections.skills.subtitle}>
             <div className="grid w-full grid-cols-3 gap-8">
               {site.skills.map((skill) => (
                 <span key={skill} className="text-sm leading-5 text-[var(--body)]">
@@ -132,7 +166,7 @@ function App() {
             </div>
           </Section>
 
-          <Section title={site.sections.career.title} subtitle={site.sections.career.subtitle}>
+          <Section id="career" title={site.sections.career.title} subtitle={site.sections.career.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
               {visibleCareer.map((entry) => (
                 <CompanyEntry key={entry.company} {...entry} />
@@ -146,7 +180,7 @@ function App() {
             ) : null}
           </Section>
 
-          <Section title={site.sections.projects.title} subtitle={site.sections.projects.subtitle}>
+          <Section id="projects" title={site.sections.projects.title} subtitle={site.sections.projects.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
               <div className="flex flex-col gap-12">
                 {visibleProjects.map((project) => (
@@ -173,9 +207,9 @@ function App() {
   );
 }
 
-function ConnectSection({ title, links }) {
+function ConnectSection({ id, title, links }) {
   return (
-    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
+    <section id={id} className="site-section z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
       <h2 className="font-semibold leading-6 tracking-tight text-[var(--heading)]">{title}</h2>
       <div className="flex flex-wrap gap-3">
         {links.map((link) => (
@@ -264,9 +298,9 @@ function ConnectIcon({ name }) {
   return icons[name] ?? null;
 }
 
-function Section({ title, subtitle, children }) {
+function Section({ id, title, subtitle, children }) {
   return (
-    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
+    <section id={id} className="site-section z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
       <div className="flex flex-col gap-2">
         <h2 className="font-semibold leading-6 tracking-tight text-[var(--heading)]">{title}</h2>
         <p className="text-sm leading-5 text-[var(--body)]">{subtitle}</p>

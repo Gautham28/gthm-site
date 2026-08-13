@@ -158,7 +158,7 @@ export function GitHubGraph({ username }) {
   if (!username) return null;
 
   return (
-    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col px-6 pb-12">
+    <section id="github" className="site-section z-40 mx-auto flex w-full max-w-screen-sm flex-col px-6 pb-12">
       <div className="github-graph">
         {error ? (
           <p className="text-sm leading-5 text-[var(--muted-body)]">Unable to load GitHub activity right now.</p>
