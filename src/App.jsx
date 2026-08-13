@@ -89,7 +89,7 @@ function App() {
       </button>
 
       <div className="relative flex flex-col">
-        <div className="min-h-40 w-full" />
+        <div className="min-h-16 w-full" />
 
         <header className="flex flex-col gap-8">
           <div className="mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
