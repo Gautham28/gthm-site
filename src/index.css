@@ -563,6 +563,54 @@ button {
   }
 }
 
+/* The circular reveal is driven by a clip-path animation on the new snapshot,
+   so the default crossfade has to be switched off for both snapshots. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 0;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* Browsers without View Transitions fall back to a plain colour fade. */
+@supports not (view-transition-name: none) {
+  .theme-surface {
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
+  }
+}
+
+.theme-toggle-icon {
+  display: inline-flex;
+  animation: theme-icon-swap 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes theme-icon-swap {
+  from {
+    opacity: 0;
+    transform: rotate(-120deg) scale(0.4);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-icon {
+    animation: none;
+  }
+}
+
 @media (max-width: 767px) {
   .pixel-mark {
     font-size: 140px;

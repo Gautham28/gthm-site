@@ -1,19 +1,26 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { GitHubGraph } from "./components/GitHubGraph.jsx";
 import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
 import { site } from "./lib/content.js";
 
 const CAREER_PREVIEW_COUNT = 2;
 const PROJECTS_PREVIEW_COUNT = 2;
+const REVEAL_DURATION = 620;
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.classList.toggle("dark", theme === "dark");
+}
 
 function App() {
   const [theme, setTheme] = useState("dark");
   const [showAllCareer, setShowAllCareer] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const toggleRef = useRef(null);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.classList.toggle("dark", theme === "dark");
+    applyTheme(theme);
   }, [theme]);
 
   const toggleLabel = useMemo(
@@ -21,18 +28,63 @@ function App() {
     [theme],
   );
 
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    const button = toggleRef.current;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!document.startViewTransition || !button || reducedMotion) {
+      setTheme(nextTheme);
+      return;
+    }
+
+    const { left, top, width, height } = button.getBoundingClientRect();
+    const originX = left + width / 2;
+    const originY = top + height / 2;
+    const endRadius = Math.hypot(
+      Math.max(originX, window.innerWidth - originX),
+      Math.max(originY, window.innerHeight - originY),
+    );
+
+    const transition = document.startViewTransition(() => {
+      flushSync(() => setTheme(nextTheme));
+      applyTheme(nextTheme);
+    });
+
+    transition.ready
+      .then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${originX}px ${originY}px)`,
+              `circle(${endRadius}px at ${originX}px ${originY}px)`,
+            ],
+          },
+          {
+            duration: REVEAL_DURATION,
+            easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+            pseudoElement: "::view-transition-new(root)",
+          },
+        );
+      })
+      .catch(() => {});
+  };
+
   const visibleCareer = showAllCareer ? site.career : site.career.slice(0, CAREER_PREVIEW_COUNT);
   const visibleProjects = showAllProjects ? site.projects : site.projects.slice(0, PROJECTS_PREVIEW_COUNT);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--body)] transition-colors duration-300">
+    <div className="theme-surface min-h-screen bg-[var(--bg)] text-[var(--body)]">
       <button
+        ref={toggleRef}
         aria-label={toggleLabel}
-        className="group fixed bottom-6 right-6 z-50 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--toggle-border)] bg-[var(--toggle-bg)] text-[var(--heading)] backdrop-blur-sm transition-all duration-300 hover:scale-[0.9] hover:bg-transparent"
+        className="theme-toggle group fixed bottom-6 right-6 z-50 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--toggle-border)] bg-[var(--toggle-bg)] text-[var(--heading)] backdrop-blur-sm transition-all duration-300 hover:scale-[0.9] hover:bg-transparent"
         type="button"
-        onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+        onClick={toggleTheme}
       >
-        {theme === "dark" ? <MoonIcon /> : <SunIcon />}
+        <span key={theme} className="theme-toggle-icon">
+          {theme === "dark" ? <MoonIcon /> : <SunIcon />}
+        </span>
         <span className="sr-only">Toggle theme</span>
       </button>
 
