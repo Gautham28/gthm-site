@@ -4,6 +4,7 @@ import { CommandPalette } from "./components/CommandPalette.jsx";
 import { GitHubGraph } from "./components/GitHubGraph.jsx";
 import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
 import { Toast } from "./components/Toast.jsx";
+import { copyText } from "./lib/clipboard.js";
 import { site } from "./lib/content.js";
 
 const CAREER_PREVIEW_COUNT = 2;
@@ -19,7 +20,7 @@ function App() {
   const [theme, setTheme] = useState("dark");
   const [showAllCareer, setShowAllCareer] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [toast, setToast] = useState("");
+  const [toast, setToast] = useState({ message: "", id: 0 });
   const toggleRef = useRef(null);
   const toastTimerRef = useRef(null);
 
@@ -29,9 +30,11 @@ function App() {
   }, []);
 
   const showToast = useCallback((message) => {
-    setToast(message);
+    setToast((current) => ({ message, id: current.id + 1 }));
     window.clearTimeout(toastTimerRef.current);
-    toastTimerRef.current = window.setTimeout(() => setToast(""), 2200);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast((current) => ({ ...current, message: "" }));
+    }, 2200);
   }, []);
 
   const handleCopiedEmail = useCallback(
@@ -107,7 +110,7 @@ function App() {
         onCopied={handleCopiedEmail}
         onToggleTheme={toggleTheme}
       />
-      <Toast message={toast} />
+      <Toast key={toast.id} message={toast.message} />
 
       <button
         ref={toggleRef}
@@ -152,7 +155,12 @@ function App() {
         </header>
 
         <main className="z-40 flex flex-col">
-          <ConnectSection id="connect" title={site.sections.connect.title} links={site.connect} />
+          <ConnectSection
+            id="connect"
+            title={site.sections.connect.title}
+            links={site.connect}
+            onCopyEmail={handleCopiedEmail}
+          />
 
           <GitHubGraph username={site.github?.username} />
 
@@ -207,26 +215,45 @@ function App() {
   );
 }
 
-function ConnectSection({ id, title, links }) {
+function ConnectSection({ id, title, links, onCopyEmail }) {
   return (
     <section id={id} className="site-section z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
       <h2 className="font-semibold leading-6 tracking-tight text-[var(--heading)]">{title}</h2>
       <div className="flex flex-wrap gap-3">
         {links.map((link) => (
-          <ConnectLink key={link.label} {...link} />
+          <ConnectLink key={link.label} onCopyEmail={onCopyEmail} {...link} />
         ))}
       </div>
     </section>
   );
 }
 
-function ConnectLink({ label, icon, href }) {
+function ConnectLink({ label, icon, href, onCopyEmail }) {
+  const isMail = href.startsWith("mailto:");
+  const email = isMail ? href.replace(/^mailto:/i, "") : "";
+
+  const handleClick = async (event) => {
+    if (!isMail || !email) return;
+
+    event.preventDefault();
+
+    try {
+      await copyText(email);
+      onCopyEmail?.(email);
+    } catch {
+      window.location.href = href;
+    }
+  };
+
   return (
     <a
+      aria-label={isMail ? `Copy email ${email}` : undefined}
       className="connect-link"
       href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
       rel="noreferrer"
+      target={href.startsWith("http") ? "_blank" : undefined}
+      title={isMail ? `Copy ${email}` : undefined}
+      onClick={handleClick}
     >
       <ConnectIcon name={icon} />
       <span>{label}</span>
