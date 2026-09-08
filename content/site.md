@@ -2,20 +2,20 @@
 profile:
   name: Gautham Krishna
   tagline: "22, Application Developer"
-  image: /pfoliopic.jpg
+  image: /skriblp.png
 
 sections:
   connect:
     title: Connect
-  skills:
-    title: Skills
-    subtitle: Technologies and tools I work with
   career:
     title: Career
     subtitle: Work experience and roles
   projects:
     title: Projects I Built
     subtitle: Personal projects and experiments
+  skills:
+    title: Skills
+    subtitle: Technologies and tools I work with
 
 connect:
   - label: GitHub

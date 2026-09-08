@@ -97,6 +97,15 @@
   --tooltip-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
+.profile-avatar {
+  transition: filter 0.3s ease;
+}
+
+:root:not([data-theme="light"]) .profile-avatar,
+:root[data-theme="dark"] .profile-avatar {
+  filter: invert(1);
+}
+
 * {
   box-sizing: border-box;
   overscroll-behavior: none;

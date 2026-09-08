@@ -96,7 +96,7 @@ function App() {
             <div className="flex items-center gap-5">
               <img
                 alt={site.profile.name}
-                className="h-20 w-20 shrink-0 rounded-2xl object-cover"
+                className="profile-avatar h-20 w-20 shrink-0 rounded-2xl object-cover"
                 src={site.profile.image}
               />
               <div className="flex flex-col gap-1">
@@ -121,16 +121,6 @@ function App() {
           <ConnectSection title={site.sections.connect.title} links={site.connect} />
 
           <GitHubGraph username={site.github?.username} />
-
-          <Section title={site.sections.skills.title} subtitle={site.sections.skills.subtitle}>
-            <div className="grid w-full grid-cols-3 gap-8">
-              {site.skills.map((skill) => (
-                <span key={skill} className="text-sm leading-5 text-[var(--body)]">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </Section>
 
           <Section title={site.sections.career.title} subtitle={site.sections.career.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
@@ -166,6 +156,16 @@ function App() {
               />
             ) : null}
           </Section>
+
+          {/* <Section title={site.sections.skills.title} subtitle={site.sections.skills.subtitle}>
+            <div className="grid w-full grid-cols-3 gap-8">
+              {site.skills.map((skill) => (
+                <span key={skill} className="text-sm leading-5 text-[var(--body)]">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </Section> */}
 
           <QuoteVisitorCard counterKey={site.visitorCounter?.key} quote={site.quote} />
         </main>
