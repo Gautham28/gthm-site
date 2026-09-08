@@ -14,7 +14,7 @@ function applyTheme(theme) {
 }
 
 function App() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   const [showAllCareer, setShowAllCareer] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const toggleRef = useRef(null);
