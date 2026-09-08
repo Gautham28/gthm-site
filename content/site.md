@@ -18,18 +18,21 @@ sections:
     subtitle: Technologies and tools I work with
 
 connect:
+  - label: Email
+    icon: email
+    href: "mailto:hi@gthm.me"
   - label: GitHub
     icon: github
     href: "https://github.com/Gautham28"
-  - label: Twitter
-    icon: twitter
-    href: "#"
   - label: LinkedIn
     icon: linkedin
     href: "#"
-  - label: Mail
-    icon: mail
-    href: "mailto:hi@gthm.me"
+  - label: Instagram
+    icon: instagram
+    href: "#"
+  - label: X
+    icon: x
+    href: "#"
   - label: Resume
     icon: resume
     href: "#"

@@ -180,9 +180,9 @@ function App() {
 
 function ConnectSection({ title, links }) {
   return (
-    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-4 py-12 sm:px-6">
+    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
       <h2 className="font-semibold leading-6 tracking-tight text-[var(--heading)]">{title}</h2>
-      <div className="flex w-full items-center justify-between gap-1 overflow-x-auto no-scrollbar sm:gap-3 sm:justify-start sm:flex-wrap sm:overflow-visible">
+      <div className="connect-links-container">
         {links.map((link) => (
           <ConnectLink key={link.label} {...link} />
         ))}
@@ -218,9 +218,16 @@ function GithubIcon({ className = "h-4 w-4 shrink-0" }) {
 }
 
 function ConnectIcon({ name }) {
+  const normalizedName = name?.toLowerCase();
+
   const icons = {
     github: <GithubIcon />,
     twitter: (
+      <svg aria-hidden="true" className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+    x: (
       <svg aria-hidden="true" className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       </svg>
@@ -230,7 +237,38 @@ function ConnectIcon({ name }) {
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.537H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.49v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
       </svg>
     ),
+    instagram: (
+      <svg
+        aria-hidden="true"
+        className="h-4 w-4 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+      >
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+      </svg>
+    ),
     mail: (
+      <svg
+        aria-hidden="true"
+        className="h-4 w-4 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+      >
+        <rect width="20" height="16" x="2" y="4" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
+    ),
+    email: (
       <svg
         aria-hidden="true"
         className="h-4 w-4 shrink-0"
@@ -266,7 +304,7 @@ function ConnectIcon({ name }) {
     ),
   };
 
-  return icons[name] ?? null;
+  return icons[normalizedName] ?? null;
 }
 
 function Section({ title, subtitle, children }) {

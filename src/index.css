@@ -257,34 +257,52 @@ button {
   color: rgba(255, 255, 255, 0.72);
 }
 
+.connect-links-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .connect-link {
   display: inline-flex;
   align-items: center;
-  gap: 3.5px;
-  padding: 5px 6px;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
   border: 1px solid var(--connect-btn-border);
   border-radius: 9999px;
   background: var(--connect-btn-bg);
   color: var(--heading);
-  font-size: 10px;
-  line-height: 14px;
+  font-size: 13px;
+  line-height: 18px;
   white-space: nowrap;
-  flex-shrink: 0;
+  flex: 1 1 auto;
+  min-width: 0;
   transition:
     background-color 150ms cubic-bezier(0.08, 0.82, 0.17, 1),
     border-color 150ms cubic-bezier(0.08, 0.82, 0.17, 1);
 }
 
 .connect-link svg {
-  width: 11px;
-  height: 11px;
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
 }
 
-@media (min-width: 480px) and (max-width: 639px) {
+.connect-link:hover {
+  background: var(--connect-btn-hover-bg);
+}
+
+@media (max-width: 600px) {
+  .connect-links-container {
+    gap: 6px;
+  }
+
   .connect-link {
-    gap: 5px;
-    padding: 6px 8px;
+    gap: 4px;
+    padding: 7px 8px;
     font-size: 11.5px;
     line-height: 16px;
   }
@@ -295,30 +313,40 @@ button {
   }
 }
 
-@media (min-width: 640px) {
+@media (max-width: 440px) {
+  .connect-links-container {
+    gap: 4px;
+  }
+
   .connect-link {
-    gap: 8px;
-    padding: 10px 16px;
-    font-size: 14px;
-    line-height: 20px;
+    gap: 3px;
+    padding: 6px 5px;
+    font-size: 10px;
+    line-height: 14px;
   }
 
   .connect-link svg {
-    width: 16px;
-    height: 16px;
+    width: 11px;
+    height: 11px;
   }
 }
 
-.connect-link:hover {
-  background: var(--connect-btn-hover-bg);
-}
+@media (max-width: 360px) {
+  .connect-links-container {
+    gap: 2px;
+  }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  .connect-link {
+    gap: 2px;
+    padding: 5px 3px;
+    font-size: 9px;
+    line-height: 12px;
+  }
+
+  .connect-link svg {
+    width: 10px;
+    height: 10px;
+  }
 }
 
 .quote-visitor-card {
