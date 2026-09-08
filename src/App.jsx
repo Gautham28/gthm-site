@@ -180,9 +180,9 @@ function App() {
 
 function ConnectSection({ title, links }) {
   return (
-    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
+    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-4 py-12 sm:px-6">
       <h2 className="font-semibold leading-6 tracking-tight text-[var(--heading)]">{title}</h2>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex w-full items-center justify-between gap-1 overflow-x-auto no-scrollbar sm:gap-3 sm:justify-start sm:flex-wrap sm:overflow-visible">
         {links.map((link) => (
           <ConnectLink key={link.label} {...link} />
         ))}
