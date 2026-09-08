@@ -48,11 +48,11 @@
   --connect-btn-hover-bg: rgba(255, 255, 255, 0.1);
   --github-cell-size: 11px;
   --github-cell-gap: 3px;
-  --github-level-0: rgba(59, 130, 246, 0.12);
-  --github-level-1: rgba(59, 130, 246, 0.38);
-  --github-level-2: rgba(59, 130, 246, 0.58);
-  --github-level-3: rgba(80, 56, 255, 0.72);
-  --github-level-4: #8f7dff;
+  --github-level-0: #1c1d27;
+  --github-level-1: #3d2f82;
+  --github-level-2: #6346d8;
+  --github-level-3: #8e6ef8;
+  --github-level-4: #c7b3ff;
   --tooltip-bg: #2a2a2a;
   --tooltip-text: #fafafa;
   --tooltip-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -87,11 +87,11 @@
   --connect-btn-bg: rgba(0, 0, 0, 0.04);
   --connect-btn-border: rgba(0, 0, 0, 0.12);
   --connect-btn-hover-bg: rgba(0, 0, 0, 0.07);
-  --github-level-0: #f0f1fe;
-  --github-level-1: #e4e5fc;
-  --github-level-2: #d9d4fb;
-  --github-level-3: #bbbffd;
-  --github-level-4: #8b80ed;
+  --github-level-0: #e4e6ed;
+  --github-level-1: #bba7fc;
+  --github-level-2: #8762f4;
+  --github-level-3: #5c32e2;
+  --github-level-4: #331592;
   --tooltip-bg: #27272a;
   --tooltip-text: #fafafa;
   --tooltip-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
@@ -433,8 +433,14 @@ button {
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
-  overscroll-behavior-y: none;
-  padding-bottom: 4px;
+  overscroll-behavior-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 2px;
+}
+
+.github-graph-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .github-graph-layout {
@@ -448,8 +454,9 @@ button {
   display: grid;
   grid-template-rows: repeat(7, var(--github-cell-size));
   gap: var(--github-cell-gap);
-  width: 28px;
+  width: 26px;
   padding-top: 18px;
+  flex-shrink: 0;
 }
 
 .github-graph-day-label {
@@ -486,7 +493,6 @@ button {
   display: grid;
   grid-template-rows: repeat(7, var(--github-cell-size));
   gap: var(--github-cell-gap);
-  overflow: visible;
 }
 
 .tooltip {
@@ -562,6 +568,14 @@ button {
   height: var(--github-cell-size);
   border-radius: 2px;
   background: var(--github-level-0);
+  display: block;
+  transition: transform 100ms ease, filter 100ms ease;
+}
+
+.github-graph-cell:hover {
+  filter: brightness(1.15);
+  transform: scale(1.18);
+  z-index: 10;
 }
 
 .github-graph-cell[data-level="1"] {
@@ -589,6 +603,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  margin-top: 4px;
 }
 
 .github-graph-total {
@@ -608,7 +623,14 @@ button {
 
 .github-graph-legend-cells {
   display: flex;
+  align-items: center;
   gap: 3px;
+}
+
+.github-graph-legend-cells .github-graph-cell {
+  width: var(--github-cell-size);
+  height: var(--github-cell-size);
+  border-radius: 2px;
 }
 
 .github-graph-skeleton {

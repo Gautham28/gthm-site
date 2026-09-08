@@ -85,36 +85,6 @@ function ContributionCell({ day }) {
   );
 }
 
-function usePassThroughVerticalScroll(ref, enabled) {
-  useEffect(() => {
-    const container = ref.current;
-    if (!container || !enabled) return;
-
-    const onWheel = (event) => {
-      const { deltaX, deltaY } = event;
-      const isVerticalScroll = Math.abs(deltaY) >= Math.abs(deltaX);
-
-      if (isVerticalScroll) {
-        window.scrollBy(0, deltaY);
-        event.preventDefault();
-        return;
-      }
-
-      const maxScrollLeft = container.scrollWidth - container.clientWidth;
-      if (maxScrollLeft <= 0) return;
-
-      const nextScrollLeft = Math.max(0, Math.min(maxScrollLeft, container.scrollLeft + deltaX));
-      if (nextScrollLeft !== container.scrollLeft) {
-        container.scrollLeft = nextScrollLeft;
-        event.preventDefault();
-      }
-    };
-
-    container.addEventListener("wheel", onWheel, { passive: false });
-    return () => container.removeEventListener("wheel", onWheel);
-  }, [ref, enabled]);
-}
-
 export function GitHubGraph({ username }) {
   const year = new Date().getFullYear();
   const scrollRef = useRef(null);
@@ -149,7 +119,11 @@ export function GitHubGraph({ username }) {
     };
   }, [username, year]);
 
-  usePassThroughVerticalScroll(scrollRef, Boolean(data && !error));
+  useEffect(() => {
+    if (data && scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+    }
+  }, [data]);
 
   const weeks = useMemo(() => buildWeeks(data?.contributions ?? []), [data]);
   const monthLabels = useMemo(() => getMonthLabels(weeks), [weeks]);
