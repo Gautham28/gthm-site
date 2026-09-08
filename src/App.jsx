@@ -134,9 +134,14 @@ function App() {
 
           <Section title={site.sections.career.title} subtitle={site.sections.career.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
-              {visibleCareer.map((entry) => (
-                <CompanyEntry key={entry.company} {...entry} />
-              ))}
+              <div className="flex flex-col gap-8">
+                {visibleCareer.map((entry, index) => (
+                  <ExperienceEntry
+                    key={`${entry.company || entry.role || entry.title || "career"}-${index}`}
+                    {...entry}
+                  />
+                ))}
+              </div>
             </div>
             {site.career.length > CAREER_PREVIEW_COUNT ? (
               <ViewAllButton
@@ -276,21 +281,82 @@ function Section({ title, subtitle, children }) {
   );
 }
 
-function CompanyEntry({ company, url, summary, roles }) {
-  return (
-    <article className="flex flex-col gap-12">
-      <div className="flex flex-col gap-0">
-        <div className="flex w-full flex-col gap-1">
-          <ExternalLink href={url}>{company}</ExternalLink>
-          <p className="text-sm leading-5 text-[var(--muted-body)]">{summary}</p>
-        </div>
-        <div className="pt-6">
-          <Timeline items={roles} />
-        </div>
+function ExperienceEntry({
+  role,
+  title,
+  company,
+  type,
+  employmentType,
+  url,
+  companyUrl,
+  time,
+  period,
+  timePeriod,
+  summary,
+  body,
+  description,
+  roles,
+}) {
+  if (roles && Array.isArray(roles) && roles.length > 0 && !role && !title) {
+    return (
+      <div className="flex flex-col gap-8">
+        {roles.map((r, idx) => (
+          <ExperienceEntry
+            key={`${company}-${idx}`}
+            company={company}
+            url={url || companyUrl}
+            {...r}
+          />
+        ))}
       </div>
+    );
+  }
+
+  const roleName = role || title;
+  const companyName = company;
+  const companyLink = companyUrl || url;
+  const rawType = type || employmentType;
+  const timeText = time || period || timePeriod;
+  const summaryText = summary || body || description;
+
+  const hasTypeInCompany = companyName && /[-–—]\s*\(/.test(companyName);
+  let formattedType = "";
+  if (rawType && !hasTypeInCompany) {
+    const cleaned = rawType.replace(/^[\s\-–—(]+/, "").replace(/[\s)]+$/, "");
+    formattedType = `- (${cleaned})`;
+  }
+
+  return (
+    <article className="flex w-full flex-col gap-1">
+      {roleName ? (
+        <h3 className="font-medium leading-6 text-[var(--heading)]">{roleName}</h3>
+      ) : null}
+
+      <div className="flex flex-wrap items-center gap-2 text-sm leading-5">
+        {companyName ? (
+          companyLink ? (
+            <ExternalLink href={companyLink}>{companyName}</ExternalLink>
+          ) : (
+            <span className="font-medium text-[var(--heading)]">{companyName}</span>
+          )
+        ) : null}
+        {formattedType ? (
+          <span className="text-[var(--muted-body)]">{formattedType}</span>
+        ) : null}
+      </div>
+
+      {timeText ? (
+        <span className="text-sm leading-5 text-[var(--body)]">{timeText}</span>
+      ) : null}
+
+      {summaryText ? (
+        <p className="pt-1 text-sm leading-5 text-[var(--muted-body)]">{summaryText}</p>
+      ) : null}
     </article>
   );
 }
+
+const CompanyEntry = ExperienceEntry;
 
 function TextEntry({ title, url, body, githubUrl }) {
   return (

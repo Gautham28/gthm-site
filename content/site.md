@@ -49,13 +49,12 @@ skills:
   - Expo
 
 career:
-  - company: Isymply
+  - role: Application Developer
+    company: Isymply
+    type: Full-time
     url: "#"
-    summary: Join over 20,000 brands using podcast advertising to drive revenue.
-    roles:
-      - title: Application Developer
-        time: Aug 2025 - Present
-        body: Owning the frontend for a platform that helps brands rapidly test podcast ads using last-minute inventory - building fast, reliable flows that turn niche, leaned-in listeners into actual conversions.
+    time: Aug 2025 - Present
+    summary: Owning the frontend for a platform that helps brands rapidly test podcast ads using last-minute inventory - building fast, reliable flows that turn niche, leaned-in listeners into actual conversions.
 
 projects:
   - title: Gradii
