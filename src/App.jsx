@@ -148,7 +148,7 @@ function App() {
 
           <Section title={site.sections.projects.title} subtitle={site.sections.projects.subtitle}>
             <div className="grid w-full grid-cols-1 gap-8">
-              <div className="flex flex-col gap-12">
+              <div className="flex flex-col gap-8">
                 {visibleProjects.map((project) => (
                   <ProjectEntry key={project.title} {...project} />
                 ))}
@@ -322,9 +322,11 @@ function ProjectEntry({ title, url, body, bullets, githubUrl }) {
   return (
     <article className="flex flex-col gap-0">
       <TextEntry body={body} githubUrl={githubUrl} title={title} url={url} />
-      <div className="pt-6">
-        <Timeline items={bullets.map((bullet) => ({ body: bullet }))} />
-      </div>
+      {bullets && bullets.length > 0 ? (
+        <div className="pt-6">
+          <Timeline items={bullets.map((bullet) => ({ body: bullet }))} />
+        </div>
+      ) : null}
     </article>
   );
 }

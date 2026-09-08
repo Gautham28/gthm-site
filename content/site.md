@@ -61,19 +61,11 @@ projects:
   - title: Gradii
     url: "#"
     githubUrl: "#"
-    body: A simple gradient generator tool made by designer for designers to create stunning gradients with customizable colors, text, and effects. Use it for your designs,...
-    bullets:
-      - Started as a late-night 'my wallpaper is boring' idea - a tiny tool to generate gradients from a few colors.
-      - Evolved into a full design utility with custom color inputs, text overlays, image blending, multi-resolution export, and more.
-      - Picked up traction unexpectedly - appreciated by Guillermo Rauch (CEO of Vercel) and featured on Peerlist.
-      - Now a polished, versatile gradient generator used weekly by hundreds of users worldwide.
+    body: A simple gradient generator tool made by designers for designers to create stunning gradients with customizable colors, text, and effects.
   - title: Colors
     url: "#"
     githubUrl: "#"
-    body: Convert color codes of any format to css color codes.
-    bullets:
-      - Built out of personal frustration - a fast, accurate color format converter for hex, rgb, hsl, and beyond.
-      - Expanded into a handy color workflow tool with palette generation, web-safe swatches, and quick export options for CSS variables or Tailwind configs.
+    body: Convert color codes of any format to CSS color codes.
 
 quote:
   text: "The only way to do great work is to love what you do."
