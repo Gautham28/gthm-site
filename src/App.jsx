@@ -4,8 +4,8 @@ import { GitHubGraph } from "./components/GitHubGraph.jsx";
 import { QuoteVisitorCard } from "./components/QuoteVisitorCard.jsx";
 import { site } from "./lib/content.js";
 
-const CAREER_PREVIEW_COUNT = 2;
-const PROJECTS_PREVIEW_COUNT = 2;
+const CAREER_PREVIEW_COUNT = 3;
+const PROJECTS_PREVIEW_COUNT = 3;
 const REVEAL_DURATION = 620;
 
 function applyTheme(theme) {
@@ -67,7 +67,7 @@ function App() {
           },
         );
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const visibleCareer = showAllCareer ? site.career : site.career.slice(0, CAREER_PREVIEW_COUNT);
@@ -180,7 +180,7 @@ function App() {
 
 function ConnectSection({ title, links }) {
   return (
-    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-6 py-12">
+    <section className="z-40 mx-auto flex w-full max-w-screen-sm flex-col gap-4 px-6 pt-6 pb-12">
       <h2 className="font-semibold leading-6 tracking-tight text-[var(--heading)]">{title}</h2>
       <div className="connect-links-container">
         {links.map((link) => (
@@ -372,7 +372,7 @@ function ExperienceEntry({
 
       <div className="flex flex-wrap items-center gap-2 text-sm leading-5">
         {companyName ? (
-          companyLink ? (
+          companyLink && companyLink !== "#" ? (
             <ExternalLink href={companyLink}>{companyName}</ExternalLink>
           ) : (
             <span className="font-medium text-[var(--heading)]">{companyName}</span>
@@ -388,7 +388,21 @@ function ExperienceEntry({
       ) : null}
 
       {summaryText ? (
-        <p className="pt-1 text-sm leading-5 text-[var(--muted-body)]">{summaryText}</p>
+        Array.isArray(summaryText) ? (
+          summaryText.length === 1 ? (
+            <p className="pt-1 text-sm leading-5 text-[var(--muted-body)]">{summaryText[0]}</p>
+          ) : (
+            <ul className="pt-1 list-none space-y-1 text-sm leading-5 text-[var(--muted-body)]">
+              {summaryText.map((item, idx) => (
+                <li key={idx} className="relative pl-4 before:absolute before:left-0 before:content-['-']">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )
+        ) : (
+          <p className="pt-1 text-sm leading-5 text-[var(--muted-body)]">{summaryText}</p>
+        )
       ) : null}
     </article>
   );
@@ -441,9 +455,8 @@ function Timeline({ items }) {
       {items.map((item, index) => (
         <li key={`${item.title || item.body}-${index}`} className="flex gap-3 pt-6 first:pt-0">
           <div
-            className={`relative flex w-6 flex-shrink-0 flex-col items-center ${
-              index === 0 ? "pt-1.5" : ""
-            }`}
+            className={`relative flex w-6 flex-shrink-0 flex-col items-center ${index === 0 ? "pt-1.5" : ""
+              }`}
           >
             {index > 0 ? <div aria-hidden="true" className="h-[9px] w-[1.5px] bg-[var(--line)]" /> : null}
             <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--body)]" />
