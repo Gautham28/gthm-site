@@ -20,19 +20,19 @@ sections:
 connect:
   - label: Email
     icon: email
-    href: "mailto:hi@gthm.me"
+    href: "mailto:gauthamk2003@gmail.com"
   - label: GitHub
     icon: github
     href: "https://github.com/Gautham28"
   - label: LinkedIn
     icon: linkedin
-    href: "#"
+    href: "https://www.linkedin.com/in/gauthamkrishna28/"
   - label: Instagram
     icon: instagram
-    href: "#"
+    href: "https://www.instagram.com/gautham.28_/"
   - label: X
     icon: x
-    href: "#"
+    href: "https://x.com/gthmdottxt"
   - label: Resume
     icon: resume
     href: "#"
