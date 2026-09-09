@@ -1,7 +1,7 @@
 ---
 profile:
   name: Gautham Krishna
-  tagline: "22, Application Developer"
+  tagline: "23, Application Developer"
   image: /skriblp.png
 
 sections:
