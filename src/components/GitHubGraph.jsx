@@ -121,7 +121,7 @@ export function GitHubGraph({ username }) {
 
   useEffect(() => {
     if (data && scrollRef.current) {
-      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+      scrollRef.current.scrollLeft = 0;
     }
   }, [data]);
 
