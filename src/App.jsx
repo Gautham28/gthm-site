@@ -557,7 +557,7 @@ function BottomFade() {
 
 function PixelFooter() {
   return (
-    <footer className="relative z-10 mt-32 h-48 w-full items-center justify-center" aria-hidden="true">
+    <footer className="pointer-events-none relative z-10 mt-32 h-48 w-full items-center justify-center select-none" aria-hidden="true">
       <div className="footer-glow" />
       <div className="relative z-10 mx-auto h-48 w-full max-w-screen-sm items-center justify-center">
         <div className="relative mx-auto flex h-full w-full max-w-screen-sm items-start overflow-hidden">
