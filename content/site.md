@@ -113,6 +113,24 @@ projects:
     url: https://aerou1.vercel.app/docs/index.html
     githubUrl: https://github.com/Gautham28/aero-ui
     body: Ultra-lightweight HTML and CSS component library for the web with zero dependencies, no build step, and built-in dark mode support.
+  - title: sprintprep
+    url: "#"
+    body: A website where students can purchase curated interview preparation bundles.
+  - title: flick app
+    url: "#"
+    body: A mobile app to organize and clean up your photo gallery with a Tinder-style swipe interface.
+  - title: localhost studio
+    url: "#"
+    body: A modern landing page designed for a software and design studio.
+  - title: localhost AI
+    url: "#"
+    body: Concept landing page for a fictional artificial intelligence company.
+  - title: localhost mobile
+    url: "#"
+    body: Showcase landing page designed for a fictional mobile application.
+  - title: localhost startup
+    url: "#"
+    body: High-converting landing page built for a fictional startup.
 
 quote:
   text: "The only way to do great work is to love what you do."

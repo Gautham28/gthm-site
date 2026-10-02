@@ -414,7 +414,11 @@ function TextEntry({ title, url, body, githubUrl }) {
   return (
     <article className="flex w-full flex-col gap-1">
       <div className="flex items-center gap-3">
-        <ExternalLink href={url}>{title}</ExternalLink>
+        {url ? (
+          <ExternalLink href={url}>{title}</ExternalLink>
+        ) : (
+          <span className="font-medium text-[var(--heading)]">{title}</span>
+        )}
         {githubUrl ? <GithubRepoLink href={githubUrl} /> : null}
       </div>
       <p className="text-sm leading-5 text-[var(--muted-body)]">{body}</p>
@@ -526,7 +530,7 @@ function ExternalLink({ href, children }) {
     <a
       className="group inline-flex w-fit items-center gap-2 text-[var(--heading)] transition-colors duration-150 hover:text-[var(--heading)]"
       href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
+      target={href?.startsWith("http") ? "_blank" : undefined}
       rel="noreferrer"
     >
       <span>{children}</span>
