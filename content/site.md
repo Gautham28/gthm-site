@@ -35,7 +35,7 @@ connect:
     href: "https://x.com/gthmdottxt"
   - label: Resume
     icon: resume
-    href: "public/resume.pdf"
+    href: "https://drive.google.com/file/d/14hOrYdyqp56n6L5Ico9Yf9Xs6SFEn0gd/view?usp=sharing"
 
 github:
   username: Gautham28
