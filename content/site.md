@@ -106,7 +106,6 @@ projects:
     githubUrl: https://github.com/Gautham28/ai-app-builder
     body: An AI app builder that generates full-stack code from a prompt, configures packages, and renders live in-browser previews.
   - title: Rupi
-    url: https://rupi.pages.dev/
     githubUrl: https://github.com/Gautham28/Rupi
     body: Sandbox ledger for idempotent transfers built with Spring Boot, PostgreSQL, and Redis to ensure safe transactions without double-debiting retries.
   - title: aero UI
@@ -114,22 +113,22 @@ projects:
     githubUrl: https://github.com/Gautham28/aero-ui
     body: Ultra-lightweight HTML and CSS component library for the web with zero dependencies, no build step, and built-in dark mode support.
   - title: sprintprep
-    url: "#"
+    url: "https://sprintprep.gthm.site/"
     body: A website where students can purchase curated interview preparation bundles.
   - title: flick app
-    url: "#"
+    url: "https://flick-gthm.netlify.app/"
     body: A mobile app to organize and clean up your photo gallery with a Tinder-style swipe interface.
   - title: localhost studio
-    url: "#"
+    url: "https://www.localhoststudio.in/"
     body: A modern landing page designed for a software and design studio.
   - title: localhost AI
-    url: "#"
+    url: "https://localhoststudioai.netlify.app/"
     body: Concept landing page for a fictional artificial intelligence company.
   - title: localhost mobile
-    url: "#"
+    url: "https://localhoststudiomobiledemo.netlify.app/"
     body: Showcase landing page designed for a fictional mobile application.
   - title: localhost startup
-    url: "#"
+    url: "https://localhoststudiodemo1.netlify.app/"
     body: High-converting landing page built for a fictional startup.
 
 quote:
